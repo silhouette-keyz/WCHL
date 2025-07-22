@@ -84,7 +84,6 @@ export default function HomePage() {
   };
 
   const openBiodataModal = () => {
-    setShowDetailModal(false);
     setShowBiodataModal(true);
   };
 
@@ -291,7 +290,7 @@ export default function HomePage() {
         {showBiodataModal && (
           <div
             id="biodata-modal"
-            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 hidden z-50"
+            className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50"
           >
             <div className="bg-white p-6 rounded-lg w-full max-w-md relative">
               <button
