@@ -297,6 +297,7 @@ export default function HomePage() {
               <button
                 id="close-biodata-modal"
                 className="absolute top-2 right-2 text-red-600 text-xl font-bold"
+                onClick={closeBiodataModal}
               >
                 ×
               </button>
