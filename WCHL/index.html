@@ -1,0 +1,292 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web3 Event Ticketing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+</head>
+
+<!-- Tombol Toggle Sidebar -->
+<button id="toggleSidebar"
+  class="fixed top-4 left-4 z-50 p-2 rounded bg-indigo-700 text-white shadow-lg">
+  ☰
+</button>
+
+<div class="flex min-h-screen">
+ <aside id="sidebar"
+  class="bg-indigo-900 text-white w-64 space-y-4 py-6 px-4 fixed z-40 transform -translate-x-full transition-transform duration-300 ease-in-out h-full">
+
+
+
+    <!-- Tombol Close -->
+    <div class="flex justify-end mb-4">
+      <button id="closeSidebar" class="text-white text-2xl font-bold">&times;</button>
+    </div>
+
+    <!-- Menu Sidebar -->
+    <nav class="flex flex-col space-y-2">
+      <a href="index.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Beranda</a>
+      <a href="attendance.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Attendance</a>
+      <a href="event.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Event</a>
+      <a href="certificates.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Certificates</a>
+      <a href="validation.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Validation</a>
+    </nav>
+  </aside>
+    
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="gradient-bg text-white rounded-xl p-8 mb-8">
+            <h1 class="text-4xl font-bold mb-4">Beli Tiketmu Disini!</h1>
+            <p class="text-xl mb-6">Tiket Aman, Dompet nyaman!.</p>
+            <div class="flex space-x-4">
+            </div>
+        </div>
+
+        <!-- Anti-Scalping Features -->
+    <section id="features" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Benefit pembelian tiket</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Benefit yang akan kamu dapatkan ketika melakukan pembelian tiket.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="text-indigo-500 mb-4">
+                        <i class="fas fa-fingerprint text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">NFT Tiket</h3>
+                    <p class="text-gray-600 mb-4">Setiap tiket adalah NFT yang unik, memastikan keaslian dan mencegah duplikasi atau pemalsuan.</p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Kepemilikan yang dapat diverifikasi</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Pembatasan Transfer</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="text-indigo-500 mb-4">
+                        <i class="fas fa-chart-line text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Harga Dinamis</h3>
+                    <p class="text-gray-600 mb-4">Kami menyesuaikan harga berdasarkan permintaan.</p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Penyesuaian Harga yang nyata</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Algoritma berbasis permintaan</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="bg-gray-50 p-8 rounded-xl shadow-sm hover:shadow-md transition">
+                    <div class="text-indigo-500 mb-4">
+                        <i class="fas fa-id-card text-4xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3">Bukti Kehadiran</h3>
+                    <p class="text-gray-600 mb-4">Masukkan daftar hadir untuk mengumpulkan lencana.</p>
+                    <ul class="space-y-2 text-gray-700">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Harga Tiket Eksklusif</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-500 mt-1 mr-2"></i>
+                            <span>Merchandise menarik</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- POAP Showcase -->
+    <section class="py-20 bg-indigo-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Koleksi lencana</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Kumpulkan lencana dan dapatkan hadiah menarik.</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-12">
+                <div class="poap-badge bg-white p-2 rounded-full flex flex-col items-center">
+                    <img src="img/orkestra.png" alt="Music festival POAP badge with soundwave and guitar design in neon colors" class="w-16 h-16 rounded-full mb-2">
+                    <span class="text-xs font-medium text-center">Orkestra</span>
+                </div>
+                <div class="poap-badge bg-white p-2 rounded-full flex flex-col items-center">
+                    <img src="img/Drama Musical.png" alt="Blockchain conference POAP badge with digital blockchain nodes connected" class="w-16 h-16 rounded-full mb-2">
+                    <span class="text-xs font-medium text-center">Drama musical</span>
+                </div>
+                <div class="poap-badge bg-white p-2 rounded-full flex flex-col items-center">
+                    <img src="img/music.png" alt="Art exhibition POAP badge with abstract paint splatter in vibrant colors" class="w-16 h-16 rounded-full mb-2">
+                    <span class="text-xs font-medium text-center">Konser music</span>
+                </div>
+                <div class="poap-badge bg-white p-2 rounded-full flex flex-col items-center">
+                    <img src="img/programming.png" alt="Charity gala POAP badge with golden heart and ribbon design" class="w-16 h-16 rounded-full mb-2">
+                    <span class="text-xs font-medium text-center">Programming</span>
+                </div>
+                <div class="poap-badge bg-white p-2 rounded-full flex flex-col items-center">
+                    <img src="img/pameran lukisan.png" alt="Tech workshop POAP badge with microchip and digital elements" class="w-16 h-16 rounded-full mb-2">
+                    <span class="text-xs font-medium text-center">Pameran lukisan</span>
+                </div>
+                <div class="poap-badge bg-white p-2 rounded-full flex flex-col items-center">
+                    <img src="img/pameran tari.png" alt="Science museum VIP tour POAP badge with DNA helix and atoms design" class="w-16 h-16 rounded-full mb-2">
+                    <span class="text-xs font-medium text-center">Pameran tari</span>
+                </div>
+            </div>
+            
+            <div class="text-center">
+                <button class="px-8 py-3 gradient-bg text-white font-bold rounded-lg hover:opacity-90 transition">Lihat koleksi lencanamu</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- KYC Verification -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <img src="img/banneratas.png" alt="Illustration of secure identity verification process with shield and fingerprint icons" class="rounded-xl">
+                </div>
+                <div class="md:w-1/2 md:pl-12">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6"> Verifikasi keamanan</h2>
+                    <p class="text-xl text-gray-600 mb-6">Sistem KYC kami memastikan pembelian tiket autentik sekaligus melindungi data pribadi Anda..</p>
+                    
+                    <ul class="space-y-4 mb-8">
+                        <li class="flex items-start">
+                            <div class="bg-green-100 p-2 rounded-full mr-4">
+                                <i class="fas fa-check text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Verifikasi tiket</h4>
+                                <p class="text-gray-600">Verifikasi sekali dan beli tiket dengan aman selamanya</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-green-100 p-2 rounded-full mr-4">
+                                <i class="fas fa-check text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Perlindungan identitas</h4>
+                                <p class="text-gray-600">Data Anda dienkripsi dan tidak pernah dibagikan dengan penyelenggara acara</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <div class="bg-green-100 p-2 rounded-full mr-4">
+                                <i class="fas fa-check text-green-600"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-gray-800">Pencegahan Bot dan pembelian massal</h4>
+                                <p class="text-gray-600">Identitas terverifikasi mencegah bot dan pembelian massal</p>
+                            </div>
+                        </li>
+                    </ul>
+                    
+                    <button class="px-8 py-3 gradient-bg text-white font-bold rounded-lg hover:opacity-90 transition">Dapatkan Verifikasi</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-800 mb-4">Ulasan tentang kami</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Dipercaya oleh penyelenggara acara dan peserta di seluruh dunia</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <img src="img/sarah jhonson.jpg" alt="Portrait of Sarah Johnson, female event organizer in her 30s smiling" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Sarah Johnson</h4>
+                            <div class="text-sm text-gray-500">Peserta konser</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Saya sangat merasa senang, karena dengan membeli tiket disini saya bisa mendapatkan benefit yang menarik dan bahkan tidak ada ditempat lain"</p>
+                    <div class="text-amber-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <img src="img/michael chen.jpg" alt="Portrait of Michael Chen, young male concert attendee with glasses" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Michael Chen</h4>
+                            <div class="text-sm text-gray-500">Peserta konser</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Getting real tickets at fair prices is amazing. The POAP collection shows all the great shows I've been to."</p>
+                    <div class="text-amber-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-8 rounded-xl shadow-sm">
+                    <div class="flex items-center mb-4">
+                        <img src="img/david rodriguez.jpg" alt="Portrait of David Rodriguez, male tech conference speaker in blazer" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">David Rodriguez</h4>
+                            <div class="text-sm text-gray-500">Peserta konser</div>
+                        </div>
+                    </div>
+                    <p class="text-gray-700 mb-4">"Ini memberikan pengalaman yang berharga untuk saya, jadi saya tidak harus mencari calo lagi untuk membeli tiketnya."</p>
+                    <div class="text-amber-400">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="gradient-bg text-white py-20">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Siap untuk Pemesanan Tiket Acara yang Adil dan Aman?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">Jadikan hidup anda lebih mudah, aman, dan nyaman bersama kami!.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+     <!-- Footer -->
+  <footer class="footer">
+    <p><span>TIKETMU.COM</span> © Tim 26 WCHL 2025. All rights reserved</p>
+  </footer>
+    <script src="script.js"></script>
+</body>
+</html>

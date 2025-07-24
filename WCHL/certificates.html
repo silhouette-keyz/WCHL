@@ -1,0 +1,68 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web3 Event Ticketing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+</head>
+
+<body class="flex flex-col min-h-screen">
+
+  <!-- Tombol Toggle Sidebar -->
+  <button id="toggleSidebar"
+    class="fixed top-4 left-4 z-50 p-2 rounded bg-indigo-700 text-white shadow-lg">
+    ☰
+  </button>
+
+  <main class="flex flex-grow">
+    <!-- Sidebar -->
+    <aside id="sidebar"
+      class="bg-indigo-900 text-white w-64 space-y-4 py-6 px-4 fixed z-40 transform -translate-x-full transition-transform duration-300 ease-in-out h-full">
+      <!-- Tombol Close -->
+      <div class="flex justify-end mb-4">
+        <button id="closeSidebar" class="text-white text-2xl font-bold">&times;</button>
+      </div>
+
+      <!-- Menu Sidebar -->
+      <nav class="flex flex-col space-y-2">
+      <a href="index.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Beranda</a>
+      <a href="attendance.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Attendance</a>
+      <a href="event.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Event</a>
+      <a href="certificates.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Certificates</a>
+      <a href="validation.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Validation</a>
+    </nav>
+    </aside>
+
+        <div class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="gradient-bg text-white rounded-xl p-8 mb-8">
+            <h1 class="text-4xl font-bold mb-4">Beli Tiketmu Disini!</h1>
+            <p class="text-xl mb-6">Tiket Aman, Dompet nyaman!.</p>
+            <div class="flex space-x-4">
+            </div>
+        </div>
+
+    <!-- Section Sertifikat -->
+    <section class="p-6 bg-gray-100 min-h-screen w-full pl-64">
+      <div class="flex items-center justify-between mb-6">
+        <h2 class="text-2xl font-bold">Daftar Sertifikat</h2>
+        <input type="text" id="searchInput" placeholder="Cari sertifikat..."
+          class="border border-gray-300 rounded px-4 py-2 w-64">
+      </div>
+
+      <div id="certificateList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Sertifikat akan dirender oleh JavaScript -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p><span>TIKETMU.COM</span> © Tim 26 WCHL 2025. All rights reserved</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>

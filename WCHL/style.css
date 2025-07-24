@@ -1,0 +1,50 @@
+ @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+      html, body {
+  height: 100%;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-wrapper {
+  flex: 1;
+  display: flex;
+  min-height: 100%;
+}
+  
+        
+        .ticket-card {
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .ticket-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+        }
+        
+        .countdown {
+            font-family: monospace;
+        }
+        
+        .nft-ticket {
+            border: 2px dashed #6366f1;
+            background-color: rgba(99, 102, 241, 0.05);
+        }
+    .footer {
+  background-color:  #6366f1;
+  text-align: center;
+  padding: 15px;
+  font-size: 14px;
+  color: #f7efef;
+}
+.footer span {
+  font-weight: 600;
+  color: #f8f1f8;
+}

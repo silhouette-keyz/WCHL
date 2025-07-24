@@ -1,0 +1,80 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Poppins', sans-serif;
+  color: #fff;
+}
+
+.container {
+  background-image: url('img/bg.png');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+.top-left-text {
+  position: absolute;
+  top: 30px;
+  left: 50px;
+  color: #fff;
+  font-weight: 500;
+  font-size: 18px;
+  border-left: 3px solid #FF00FF;
+  padding-left: 10px;
+}
+
+.main-text h1 {
+  font-size: 3.2rem;
+  line-height: 1.2;
+  color: #ffffff;
+  text-shadow: 0 0 10px #ff00ff, 0 0 20px #ff00ff;
+  margin: 0;
+}
+
+.main-text h1 span {
+  font-weight: bold;
+  font-size: 3.6rem;
+}
+
+.main-text p {
+  margin-top: 10px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  text-shadow: 0 0 5px #000;
+}
+
+.login-button {
+  margin-top: 20px;
+  padding: 12px 40px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 50px;
+  background: linear-gradient(to right, #ff00ff, #9b5cff);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 0 15px #ff00ff;
+  text-decoration: none;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.login-button:hover {
+  transform: scale(1.05);
+}
+
+
+.left-side-text {
+  position: absolute;
+  left: 10px;
+  bottom: 40%;
+  transform: rotate(-90deg);
+  font-size: 0.9rem;
+  letter-spacing: 1px;
+}
