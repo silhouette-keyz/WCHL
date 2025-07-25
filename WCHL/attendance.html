@@ -1,0 +1,82 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Web3 Event Ticketing</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/ethers/dist/ethers.min.js"></script>
+</head>
+<body class="flex min-h-screen">
+  <!-- Tombol Toggle Sidebar -->
+<button id="toggleSidebar"
+  class="fixed top-4 left-4 z-50 p-2 rounded bg-indigo-700 text-white shadow-lg">
+  ☰
+</button>
+
+<div class="flex min-h-screen">
+ <aside id="sidebar"
+  class="bg-indigo-900 text-white w-64 space-y-4 py-6 px-4 fixed z-40 transform -translate-x-full transition-transform duration-300 ease-in-out h-full">
+
+
+
+    <!-- Tombol Close -->
+    <div class="flex justify-end mb-4">
+      <button id="closeSidebar" class="text-white text-2xl font-bold">&times;</button>
+    </div>
+
+    <!-- Menu Sidebar -->
+    <nav class="flex flex-col space-y-2">
+      <a href="index.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Beranda</a>
+      <a href="attendance.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Attendance</a>
+      <a href="event.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Event</a>
+      <a href="certificates.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Certificates</a>
+      <a href="validation.html" class="hover:bg-indigo-800 px-4 py-2 rounded sidebar-link">Validation</a>
+    </nav>
+  </aside>
+    
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-8">
+        <!-- Hero Section -->
+        <div class="gradient-bg text-white rounded-xl p-8 mb-8">
+            <h1 class="text-4xl font-bold mb-4">Beli Tiketmu Disini!</h1>
+            <p class="text-xl mb-6">Tiket Aman, Dompet nyaman!.</p>
+            <div class="flex space-x-4">
+            </div>
+        </div>
+  <div class="max-w-3xl mx-auto">
+    <h1 class="text-3xl font-bold mb-6 text-center">Daftar Kehadiran Event</h1>
+
+    <!-- Filter -->
+    <div class="mb-4 flex justify-center gap-4">
+      <button onclick="filterAttendance('upcoming')" class="bg-blue-600 text-white px-4 py-2 rounded">Belum Dimulai</button>
+      <button onclick="filterAttendance('attended')" class="bg-green-600 text-white px-4 py-2 rounded">Sudah Hadir</button>
+    </div>
+
+    <!-- Attendance List -->
+    <div id="attendance-list" class="space-y-4">
+      <!-- Akan diisi via JS -->
+    </div>
+  </div>
+
+  <!-- Modal Validation -->
+  <div id="validation-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden justify-center items-center z-50">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md relative">
+      <button onclick="closeValidationModal()" class="absolute top-2 right-2 text-xl font-bold">&times;</button>
+      <h2 class="text-xl font-semibold mb-4">Validasi Kehadiran</h2>
+      <div id="validation-mode">
+        <p class="mb-2">Masukkan kode validasi:</p>
+        <input type="text" class="w-full border rounded p-2 mb-4" placeholder="Contoh: ABC123" />
+        <button class="bg-blue-600 text-white px-4 py-2 rounded w-full">Kirim Kode</button>
+      </div>
+    </div>
+  </div>
+     <!-- Footer -->
+  <footer class="footer">
+    <p><span>TIKETMU.COM</span> © Tim 26 WCHL 2025. All rights reserved</p>
+  </footer>
+    <script src="script.js"></script>
+</body>
+</html>
