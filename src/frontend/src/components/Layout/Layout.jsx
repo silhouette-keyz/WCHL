@@ -1,15 +1,40 @@
-// src/components/Layout/Layout.jsx
+import React from 'react';
+import { Box, CssBaseline, Toolbar } from '@mui/material';
+import { useAuth } from '../../auth';
 import Sidebar from './Sidebar';
 import Header from './Header';
+import { useLayout } from '../../contexts/LayoutContext';
 
-export default function Layout({ children, principal, onLogout }) {
+const drawerWidth = 0;
+
+export default function Layout({ children }) {
+  const { principal, logout } = useAuth();
+  const { isSidebarOpened } = useLayout();
+
   return (
-    <div className="flex h-screen">
+    <Box sx={{ display: 'flex', height: '100vh' }}>
+      <CssBaseline />
+
+      {/* Header */}
+      <Header onLogout={logout} />
+
+      {/* Sidebar */}
       <Sidebar />
-      <div className="flex flex-col flex-1">
-        <Header principal={principal} onLogout={onLogout} />
-        <main className="p-6 overflow-y-auto bg-white flex-1">{children}</main>
-      </div>
-    </div>
+
+      {/* Main Content */}
+      <Box
+        component="main"
+        sx={{
+          flexGrow: 1,
+          bgcolor: 'background.default',
+          p: 3,
+          transition: 'margin 0.3s',
+          marginLeft: isSidebarOpened ? `${drawerWidth}px` : 0,
+        }}
+      >
+        <Toolbar />
+        {children}
+      </Box>
+    </Box>
   );
 }
