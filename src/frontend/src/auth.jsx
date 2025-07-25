@@ -1,12 +1,13 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
 import { AuthClient } from "@dfinity/auth-client";
+import { backend } from "declarations/backend";
 const IDENTITY_PROVIDER_URL = "https://identity.ic0.app";
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [authClient, setAuthClient] = useState(null);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState({});
   const [principal, setPrincipal] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [ready, setReady] = useState(false); // authClient siap digunakan
@@ -20,9 +21,18 @@ export const AuthProvider = ({ children }) => {
       setIsAuthenticated(isAuth);
 
       if (isAuth) {
-        const identity = client.getIdentity();
-        setUser(identity);
+        const identity = await client.getIdentity();
+        // setUser(identity);
         setPrincipal(identity.getPrincipal().toText());
+        const res = await backend.getUser();
+        if (res.ok) {
+          setUser({
+            name: res.ok.name,
+            username: res.ok.username,
+            telp: res.ok.telp,
+            role : Object.keys(res.ok.role)
+          });
+        }
       }
 
       setReady(true); // selesai inisialisasi

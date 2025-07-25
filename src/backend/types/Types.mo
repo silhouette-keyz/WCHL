@@ -2,13 +2,14 @@ import Principal "mo:base/Principal";
 import HashMap "mo:base/HashMap";
 
 module {
-public type Role = { #superadmin; #admin; #user };
-
-
+    public type Role = { #superadmin; #admin; #user };
     public type OldUser = {
-    username : Text;
-    role : Text;
-    registeredAt : Int;
+      userId : Principal;
+      name : Text;
+      telp : Text;
+      username : Text;
+      role : Text;
+      registeredAt : Int;
     };
 
     public func roleToText(role : Role) : Text {
@@ -24,11 +25,28 @@ public type Role = { #superadmin; #admin; #user };
     if (t == "admin") return #admin;
     #user;
     };
-  public type User = {
-    username : Text;
-    role : Role;
-    registeredAt : Int;
-  };
 
-  public type Users = HashMap.HashMap<Principal, User>;
+
+    public type User = {
+      userId : Principal;
+      name:  Text;
+      username : Text;
+      telp : Text;
+      role : Role;
+      registeredAt : Int;
+    };
+
+    public type Users = HashMap.HashMap<Principal, User>;
+
+
+    public type Event = {
+      id: Nat;
+      eventName: Text;
+      eventType: Text;
+      eventDate: Text;
+    };
+
+    public type Events = HashMap.HashMap<Nat, Event>;
+  
+  
 };
