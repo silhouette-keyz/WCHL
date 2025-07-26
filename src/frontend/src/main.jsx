@@ -4,13 +4,16 @@ import App from './App';
 import './index.scss';
 import { AuthProvider } from './auth';
 import { LayoutProvider } from "./contexts/LayoutContext";
+import { EventProvider } from "./contexts/EventContext";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <LayoutProvider>
-      <AuthProvider>
-        <App />
-      </AuthProvider>
+      <EventProvider>
+        <AuthProvider>
+          <App />
+        </AuthProvider>
+      </EventProvider>
     </LayoutProvider>
   </React.StrictMode>,
 );

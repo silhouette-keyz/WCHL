@@ -7,12 +7,13 @@ import Nat "mo:base/Nat";
 import Hash "mo:base/Hash";
 import Types "types/Types";
 import UserService "services/auth";
-import EventService "services/event";
+import Array "mo:base/Array";
+import List "mo:base/List";
 
 actor {
 
   private var users : Types.Users = HashMap.HashMap(0, Principal.equal, Principal.hash);
-  private var events: Types.Events = HashMap.HashMap(10, Nat.equal, Hash.hash);
+  
 
   // Simpanan versi lama
   private stable var stableUsers : [(Principal, Types.OldUser)] = [];
@@ -114,9 +115,86 @@ system func postupgrade() {
   };
 
   //Events
-  // var nextEventId : Nat = 0;
-  // public func addEvent(eventName: Text, eventType: Text, eventDate: Text) : async Result.Result<Types.Event, Text> {
-  //   await EventService.addEvent(eventId : nextEventId, events, eventName, eventType, eventDate)
-  //   nextEventId += 1;
-  // };
+  
+  // ---------- Tipe Data ----------
+  public type EventData = {
+      id: Nat;
+      eventName: Text;
+      eventType: Text;
+      eventDate: Text;
+  };
+  var nextEventId : Nat = 0;
+  let eventMap = HashMap.HashMap<Nat, EventData>(10, Nat.equal, Hash.hash);
+
+  public func addEventData(eventName: Text, eventType: Text, eventDate: Text) : async Nat {
+    let _event: EventData = {
+      id = nextEventId;
+      eventName = eventName;
+      eventType = eventType;
+      eventDate = eventDate;
+    };
+    eventMap.put(_event.id, _event);
+    nextEventId += 1;
+    return _event.id;
+  };
+
+  public query func getAllEventData() : async [EventData] {
+    var result : [EventData] = [];
+    for ((_, k) in eventMap.entries()) {
+      result := Array.append(result, [k]);
+    };
+    return result;
+  };
+
+  // Join Event
+  public type ParticipantData = {
+    eventId : Nat;
+    participantId : Principal;
+  };
+
+  type Certificate = {
+    eventId : Nat;
+    participantId : Principal;
+    hash : Text; // Hash(Seminar + Participant + Timestamp)
+  };
+
+  // Map eventId -> array of Principal (peserta yang join event)
+  let participantMap = HashMap.HashMap<Nat, [Principal]>(10, Nat.equal, Hash.hash);
+  
+
+  // Fungsi untuk join event, otomatis ambil Principal dari caller
+  public shared (msg) func joinEvent(eventId : Nat) : async Text {
+    let caller = msg.caller;
+
+    let currentParticipants : [Principal] =
+      switch (participantMap.get(eventId)) {
+        case (null) {
+          [];
+        };
+        case (?existing) {
+          existing;
+        };
+    };
+
+    let alreadyJoined = Array.find<Principal>(currentParticipants, func(p) { p == caller });
+
+    if (alreadyJoined == null) {
+      participantMap.put(eventId, Array.append<Principal>(currentParticipants, [caller]));
+      return "✅ Berhasil bergabung ke event";
+    } else {
+      return "⚠️ Anda sudah terdaftar di event ini";
+    };
+  };
+
+  // Fungsi untuk mengambil semua participant dari event tertentu
+  public query func getParticipantEvent(eventId : Nat) : async [ParticipantData] {
+    switch (participantMap.get(eventId)) {
+      case (null) return [];
+      case (?participants) {
+        return Array.map<Principal, ParticipantData>(participants, func(p) {
+          { eventId = eventId; participantId = p }
+        });
+      };
+    }
+  };
 };
