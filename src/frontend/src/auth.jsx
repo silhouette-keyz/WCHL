@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
         const res = await backend.getUser();
         if (res.ok) {
           setUser({
+            userId : res.ok.userId.toText(),
             name: res.ok.name,
             username: res.ok.username,
             telp: res.ok.telp,
@@ -49,7 +50,18 @@ export const AuthProvider = ({ children }) => {
       onSuccess: async () => {
         const identity = authClient.getIdentity();
         console.log('identity', identity)
-        setUser(identity);
+        
+        const res = await backend.getUser();
+        if (res.ok) {
+          setUser({
+            userId : res.ok.userId.toText(),
+            name: res.ok.name,
+            username: res.ok.username,
+            telp: res.ok.telp,
+            role : Object.keys(res.ok.role)
+          });
+        }
+
         setPrincipal(identity.getPrincipal().toText());
         setIsAuthenticated(true);
       }

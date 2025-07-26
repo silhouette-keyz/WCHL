@@ -44,7 +44,7 @@ const Header = ({ principal, onLogout }) => {
 
   return (
     <AppBar position="fixed">
-      <Container maxWidth="xl">
+      <Container>
         <Toolbar disableGutters>
           {/* ✅ Hamburger Menu to Toggle Sidebar */}
           <IconButton
@@ -71,7 +71,7 @@ const Header = ({ principal, onLogout }) => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            ProofAttend - WCHL 16
           </Typography>
 
           {/* Mobile Nav Toggle */}
@@ -116,7 +116,7 @@ const Header = ({ principal, onLogout }) => {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            ProofAttend - WCHL 16
           </Typography>
 
           {/* Pages (Desktop only) */}

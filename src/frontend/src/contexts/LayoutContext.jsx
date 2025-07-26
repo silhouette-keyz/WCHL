@@ -4,7 +4,7 @@ import React, { useState, useContext, createContext } from "react";
 const LayoutContext = createContext();
 
 function LayoutProvider({ children }) {
-  const [isSidebarOpened, setIsSidebarOpened] = useState(true);
+  const [isSidebarOpened, setIsSidebarOpened] = useState(false);
 
   const toggleSidebar = () => {
     console.log('isSidebarOpened', isSidebarOpened)

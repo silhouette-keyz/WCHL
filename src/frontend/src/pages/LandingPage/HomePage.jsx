@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Footer from '../../components/Footer';
 import {
   AppBar,
@@ -18,9 +18,15 @@ import {
 
 import { List, ListItem, ListItemText, ListItemIcon } from '@mui/material';
 import { useNavigate } from 'react-router';
+import { useEvent } from '../../contexts/EventContext';
 
 export default function HomePage() {
   const navigate = useNavigate()
+  const { eventList, getAllEvent, addDataEvent, participantList, fetchParticipants, registerEvent} = useEvent()
+
+  useEffect(()=>{
+    getAllEvent()
+  },[])
   return (
     <>
       <AppBar position="static" sx={{ background: 'linear-gradient(to right, #6366f1, #8b5cf6)' }}>
@@ -135,31 +141,17 @@ export default function HomePage() {
           </Typography>
 
           <Grid container spacing={4}>
-            {[{
-              title: 'Ruang Bermusik 2025', date: '19-20 Juli 2025. Tasikmalaya.', price: 'IDR 150K', img: 'img/event.jpg', sold: '50%', id: 'event1'
-            }, {
-              title: 'La La Land In The Concert', date: '26 Juli 2025. JIExpo Kemayoran.', price: 'IDR 900K', img: 'img/event1.jpg', sold: '40%', id: 'event2'
-            }, {
-              title: 'R-I Fest 2025', date: '15-17 Agu 2025. Jiexpo Kemayoran', price: 'IDR 80K', img: 'img/event3.jpg', sold: '10%', id: 'event3'
-            }].map((event, index) => (
-              <Grid item size={{ xs: 12, md: 4 }} key={index}>
+            {eventList.map((event, index) => (
+              <Grid item size={{ xs: 12, md: 6 }} key={index}>
                 <Card>
-                  <Box position="relative">
-                    <CardMedia component="img" height="180" image={event.img} alt={event.title} />
-                    <Chip
-                      label={`${event.sold} Sold`}
-                      sx={{ position: 'absolute', top: 16, left: 16, bgcolor: 'white', color: 'primary.main' }}
-                    />
-                  </Box>
                   <CardContent>
-                    <Typography variant="h6" gutterBottom>{event.title}</Typography>
-                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{event.date}</Typography>
+                    <Typography variant="h6" gutterBottom>{event.eventName}</Typography>
+                    <Typography variant="body2" color="text.secondary" sx={{ mb: 2 }}>{event.eventDate}</Typography>
                     <Box display="flex" justifyContent="space-between" alignItems="center">
                       <Box>
-                        <Typography variant="caption" color="text.secondary">Mulai dari harga</Typography>
-                        <Typography fontWeight="bold">{event.price}</Typography>
+                        <Typography fontWeight="bold">{event.eventType}</Typography>
                       </Box>
-                      <Button variant="contained" size="small" color="primary">Details</Button>
+                      <Button variant="contained" size="small" color="primary" onClick={()=>navigate('/login')}>Register & Join</Button>
                     </Box>
                   </CardContent>
                 </Card>

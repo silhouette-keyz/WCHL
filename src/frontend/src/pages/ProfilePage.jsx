@@ -6,12 +6,43 @@ import {
   Typography,
   Paper,
   MenuItem,
-  Select
+  Select,
+  Card, CardContent, Avatar, Badge
 } from '@mui/material';
 import { useAuth } from '../auth';
 import { backend } from "declarations/backend";
+import { styled } from "@mui/material/styles";
 
-export default function ProfileViewForm() {
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  '& .MuiBadge-badge': {
+    backgroundColor: '#44b700',
+    color: '#44b700',
+    boxShadow: `0 0 0 2px ${theme.palette.background.paper}`,
+    '&::after': {
+      position: 'absolute',
+      top: 0,
+      left: 0,
+      width: '100%',
+      height: '100%',
+      borderRadius: '50%',
+      animation: 'ripple 1.2s infinite ease-in-out',
+      border: '1px solid currentColor',
+      content: '""',
+    },
+  },
+  '@keyframes ripple': {
+    '0%': {
+      transform: 'scale(.8)',
+      opacity: 1,
+    },
+    '100%': {
+      transform: 'scale(2.4)',
+      opacity: 0,
+    },
+  },
+}));
+
+export default function ProfilePage() {
   const { principal } = useAuth();
   const [formData, setFormData] = useState({
     name: '',
@@ -75,17 +106,41 @@ export default function ProfileViewForm() {
   if (loading) return <Typography align="center">Loading...</Typography>;
 
   return (
-    <Paper elevation={3} sx={{ p: 4, maxWidth: 500, mx: 'auto' }}>
+    <>
+      
       {userExists && !editData ? (
         <>
-          <Typography variant="h6" gutterBottom>
-            Profile Anda
-          </Typography>
-          <Typography><strong>Nama:</strong> {formData.name}</Typography>
-          <Typography><strong>Email:</strong> {formData.email}</Typography>
-          <Typography><strong>Whatsapp:</strong> {formData.whatsapp}</Typography>
-          <Typography><strong>Role:</strong> {formData.role}</Typography>
-          <Button variant='contained' color="primary" onClick={()=>setEditData(true)}>Edit</Button>
+          <Card sx={{ maxWidth: 345, margin: "auto", borderRadius: 3, boxShadow: 3 }}>
+            <CardContent>
+              <Box display="flex" alignItems="center" flexDirection="column" gap={2}>
+                <StyledBadge
+                  overlap="circular"
+                  anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+                  variant="dot"
+                >
+                  <Avatar
+                    alt={formData.name}
+                    src={"/default-avatar.png"}
+                    sx={{ width: 80, height: 80 }}
+                  />
+                </StyledBadge>
+
+                <Typography variant="h6" component="div">
+                  {formData.name}
+                </Typography>
+                <Typography color="text.secondary" fontSize={14}>
+                  {formData.email}
+                </Typography>
+                <Typography color="text.secondary" fontSize={14}>
+                  {formData.whatsapp}
+                </Typography>
+                <Typography color="text.secondary" fontSize={14}>
+                  {formData.role}
+                </Typography>
+                <Button variant='contained' color="primary" onClick={()=>setEditData(true)}>Update</Button>
+              </Box>
+            </CardContent>
+          </Card>
         </>
       ) : (
         <>
@@ -138,6 +193,7 @@ export default function ProfileViewForm() {
           </Box>
         </>
       )}
-    </Paper>
+    </>
   );
 }
+ 

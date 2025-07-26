@@ -9,6 +9,8 @@ import Types "types/Types";
 import UserService "services/auth";
 import Array "mo:base/Array";
 import List "mo:base/List";
+import Time "mo:base/Time";
+import Int "mo:base/Int";
 
 actor {
 
@@ -147,54 +149,63 @@ system func postupgrade() {
   };
 
   // Join Event
-  public type ParticipantData = {
-    eventId : Nat;
-    participantId : Principal;
-  };
-
   type Certificate = {
     eventId : Nat;
     participantId : Principal;
     hash : Text; // Hash(Seminar + Participant + Timestamp)
   };
 
+  type ParticipantData = {
+    eventId : Nat;
+    participantId : Principal;
+    name : Text;
+    username : Text;
+    telp : Text;
+    RegisterDate : Text;
+  };
+
   // Map eventId -> array of Principal (peserta yang join event)
-  let participantMap = HashMap.HashMap<Nat, [Principal]>(10, Nat.equal, Hash.hash);
-  
+  let participantMap = HashMap.HashMap<Nat, ParticipantData>(10, Nat.equal, Hash.hash);
 
-  // Fungsi untuk join event, otomatis ambil Principal dari caller
-  public shared (msg) func joinEvent(eventId : Nat) : async Text {
+  let now = Time.now(); // waktu dalam nanodetik (Int)
+  let nowSeconds = now / 1_000_000_000;
+  let nowText = Int.toText(nowSeconds); // hasilnya berupa detik sejak epoch (1970)
+ 
+ public shared (msg) func joinEvent(eventId: Nat) : async Nat {
     let caller = msg.caller;
-
-    let currentParticipants : [Principal] =
-      switch (participantMap.get(eventId)) {
-        case (null) {
-          [];
+    switch (users.get(caller)) {
+      case (?user) {
+        let peserta: ParticipantData = {
+          eventId = eventId;
+          participantId =  caller;
+          name = user.name;
+          username = user.username;
+          telp = user.telp;
+          RegisterDate = nowText; // string dari timestamp
         };
-        case (?existing) {
-          existing;
-        };
-    };
-
-    let alreadyJoined = Array.find<Principal>(currentParticipants, func(p) { p == caller });
-
-    if (alreadyJoined == null) {
-      participantMap.put(eventId, Array.append<Principal>(currentParticipants, [caller]));
-      return "✅ Berhasil bergabung ke event";
-    } else {
-      return "⚠️ Anda sudah terdaftar di event ini";
-    };
+        participantMap.put(peserta.eventId, peserta);
+        return peserta.eventId;
+      }
+    }
+    
   };
 
   // Fungsi untuk mengambil semua participant dari event tertentu
-  public query func getParticipantEvent(eventId : Nat) : async [ParticipantData] {
-    switch (participantMap.get(eventId)) {
-      case (null) return [];
-      case (?participants) {
-        return Array.map<Principal, ParticipantData>(participants, func(p) {
-          { eventId = eventId; participantId = p }
-        });
+  public query func getParticipantEvent(eventId: Nat) : async [ParticipantData] {
+    var result : [ParticipantData] = [];
+    for ((_, p) in participantMap.entries()) {
+      if (p.eventId == eventId) {
+        result := Array.append(result, [p]);
       };
-    }
+    };
+    return result;
+  };
+
+
+  //Attendance
+  type Attendance = {
+    eventId : Nat;
+    participant : Principal;
+    checkInTime : Text;
   };
 };

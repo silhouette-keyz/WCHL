@@ -23,11 +23,19 @@ function EventProvider({ children }) {
     getAllEvent()
   };
 
+  const registerEvent = async(eventId) => {
+    console.log('eventId', eventId)
+    const res = await backend.joinEvent(Number(eventId));
+    console.log('registerEvent', res)
+    fetchParticipants(eventId)
+  };
+
   const fetchParticipants = async (eventId) => {
     try {
       const result = await backend.getParticipantEvent(Number(eventId));
       console.log('result', result)
       setParticipantList(fixBigInt(result));
+      return fixBigInt(result)
     } catch (err) {
       console.error("Gagal ambil peserta:", err);
     }
@@ -35,7 +43,7 @@ function EventProvider({ children }) {
   
 
   return (
-    <EventContext.Provider value={{ eventList, getAllEvent, addDataEvent, participantList, fetchParticipants }}>
+    <EventContext.Provider value={{ eventList, getAllEvent, addDataEvent, participantList, fetchParticipants, registerEvent }}>
       {children}
     </EventContext.Provider>
   );

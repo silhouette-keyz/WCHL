@@ -32,8 +32,6 @@ const Sidebar = () => {
   const menuItems = [
     { name: 'Dashboard', icon: <LayoutDashboard size={20} />, path: '/app/dashboard' },
     { name: 'Events', icon: <CalendarCheck size={20} />, path: '/app/events' },
-    { name: 'Participants', icon: <Users size={20} />, path: '/app/participants' },
-    { name: 'Attendances', icon: <ClipboardList size={20} />, path: '/app/attendances' },
     { name: 'Certificates', icon: <Award size={20} />, path: '/app/certificates' },
   ];
 

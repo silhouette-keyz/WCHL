@@ -25,20 +25,32 @@ export default function LoginPage() {
           <Typography variant="body1" color="text.secondary" gutterBottom>
             Silakan login terlebih dahulu menggunakan Internet Identity
           </Typography>
-          Authenticate : {
+          {/* Authenticate : {
             JSON.stringify(isAuthenticated)
-          }
+          } */}
           <Button
             variant="contained"
             color="primary"
             size="large"
-            sx={{ mt: 2, borderRadius: 999, boxShadow: 3 }}
+            sx={{ mt: 2, flex:1, borderRadius: 999, boxShadow: 3 }}
             onClick={async()=> {
               await login()
               navigate('/app/dashboard')
             }}
           >
             Login dengan Internet Identity
+          </Button>
+          <br/>
+          <Button
+            variant="contained"
+            color="secondary"
+            size="large"
+            sx={{ mt: 2,  flex:1,borderRadius: 999, boxShadow: 3 }}
+            onClick={async()=> {
+              navigate('/')
+            }}
+          >
+            Back to Home
           </Button>
         </Paper>
       </Container>

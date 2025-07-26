@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, CssBaseline, Toolbar } from '@mui/material';
+import { Box, Container, CssBaseline, Toolbar } from '@mui/material';
 import { useAuth } from '../../auth';
 import Sidebar from './Sidebar';
 import Header from './Header';
@@ -22,19 +22,9 @@ export default function Layout({ children }) {
       <Sidebar />
 
       {/* Main Content */}
-      <Box
-        component="main"
-        sx={{
-          flexGrow: 1,
-          bgcolor: 'background.default',
-          p: 3,
-          transition: 'margin 0.3s',
-          marginLeft: isSidebarOpened ? `${drawerWidth}px` : 0,
-        }}
-      >
-        <Toolbar />
+      <Container sx={{mt:10}}>
         {children}
-      </Box>
+      </Container>
     </Box>
   );
 }

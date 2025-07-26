@@ -21,13 +21,14 @@ const BootstrapDialog = styled(Dialog)(({ theme }) => ({
   },
 }));
 
-export default function DialogComponent({open, title,  handleClose, handleSubmit, children}) {
+export default function DialogComponent({open, title,  handleClose, handleSubmit, children, fullScreen, showSubmit}) {
   return (
     <React.Fragment>
       <BootstrapDialog
         onClose={handleClose}
         aria-labelledby="customized-dialog-title"
         open={open}
+        fullScreen={fullScreen}
       >
         <DialogTitle sx={{ m: 0, p: 2 }} id="customized-dialog-title">
           {title}
@@ -47,12 +48,16 @@ export default function DialogComponent({open, title,  handleClose, handleSubmit
         <DialogContent dividers>
           {children}
         </DialogContent>
-        <DialogActions>
-          <Button autoFocus onClick={handleSubmit}>
-            Save Data
-          </Button>
-          
-        </DialogActions>
+        {
+          showSubmit &&
+           <DialogActions>
+            <Button autoFocus onClick={handleSubmit}>
+              Save Data
+            </Button>
+            
+          </DialogActions>
+        }
+       
       </BootstrapDialog>
     </React.Fragment>
   );
