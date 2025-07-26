@@ -8,7 +8,12 @@ import QRCode from "react-qr-code";
 import QrReader from 'react-qr-scanner'
 
 export default function EventPage() {
-  const { eventList, getAllEvent, addDataEvent, participantList, fetchParticipants, registerEvent} = useEvent()
+  const { eventList, getAllEvent, addDataEvent, participantList, fetchParticipants, registerEvent,
+    getMyCertificates, getCertificateEvent,
+    myCertificateList, certificateList,
+    createNFTCertificate
+
+  } = useEvent()
   const { user, principal } = useAuth();
   const [openModal, setOpenModal] = useState(false)
   const [formEvent, setFormEvent] = useState({})
@@ -65,6 +70,10 @@ export default function EventPage() {
 
   const handleScanQR = (data) => {
     setResultQR(data)
+  }
+
+  const checkInEvent = (eventId, userId)=>{
+    createNFTCertificate(eventId, userId)
   }
   
   return (
@@ -213,7 +222,7 @@ export default function EventPage() {
                           
                         </TableCell>
                         <TableCell>
-                          <Button variant='contained' color='primary'>Check-in</Button>
+                          <Button variant='contained' color='primary' onClick={()=> checkInEvent(eventChoose.id, item.userId)}>Check-in</Button>
                         </TableCell>
                       </TableRow>
                     )

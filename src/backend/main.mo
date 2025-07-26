@@ -12,6 +12,8 @@ import List "mo:base/List";
 import Time "mo:base/Time";
 import Int "mo:base/Int";
 
+// Untuk hash SHA256
+
 actor {
 
   private var users : Types.Users = HashMap.HashMap(0, Principal.equal, Principal.hash);
@@ -149,12 +151,6 @@ system func postupgrade() {
   };
 
   // Join Event
-  type Certificate = {
-    eventId : Nat;
-    participantId : Principal;
-    hash : Text; // Hash(Seminar + Participant + Timestamp)
-  };
-
   type ParticipantData = {
     eventId : Nat;
     participantId : Principal;
@@ -208,4 +204,77 @@ system func postupgrade() {
     participant : Principal;
     checkInTime : Text;
   };
+
+  type Certificate = {
+    eventId : Nat;
+    participantId : Principal;
+    certificateHash : Text; // Hash(Event + Participant + Timestamp)
+  };
+
+  let certMap = HashMap.HashMap<Principal, Certificate>(10, Principal.equal, Principal.hash);
+  let participantIndex = HashMap.HashMap<Principal, List.List<Certificate>>(10, Principal.equal, Principal.hash);
+  let eventIndex = HashMap.HashMap<Nat, List.List<Certificate>>(10, Nat.equal, Hash.hash);
+
+  public shared (msg) func createCertificate(
+    eventId: Nat,
+    certificateHash: Text
+  ) : async Result.Result<Certificate, Text> {
+    let caller = msg.caller;
+    let cert : Certificate = {
+      eventId = eventId;
+      participantId = caller;
+      certificateHash = certificateHash;
+    };
+
+    certMap.put(caller, cert);
+
+    // Tambahkan ke participantIndex
+    switch (participantIndex.get(caller)) {
+      case (?list) {
+        participantIndex.put(caller, List.push(cert, list));
+      };
+      case null {
+        participantIndex.put(caller, List.push(cert, List.nil<Certificate>()));
+      };
+    };
+
+    // ✅ Tambahkan ke eventIndex
+    switch (eventIndex.get(eventId)) {
+      case (?list) {
+        eventIndex.put(eventId, List.push(cert, list));
+      };
+      case null {
+        eventIndex.put(eventId, List.push(cert, List.nil<Certificate>()));
+      };
+    };
+    return #ok(cert);
+  };
+
+  public query func getAllCertificate() : async [Certificate] {
+    var result : [Certificate] = [];
+    for ((_, k) in certMap.entries()) {
+      result := Array.append(result, [k]);
+    };
+    return result;
+  };
+  // 1️⃣ Get semua sertifikat berdasarkan Event
+  public query func getCertificatesByEvent(eventId: Nat) : async [Certificate] {
+    switch (eventIndex.get(eventId)) {
+      case (?list) return List.toArray(list);
+      case (_) return [];
+    }
+  };
+
+  // 2️⃣ Ambil semua sertifikat berdasarkan participant yang sedang login (caller)
+  public shared query (msg) func getMyCertificates() : async [Certificate] {
+    switch (participantIndex.get(msg.caller)) {
+      case (?list) return List.toArray(list);
+      case (_) return [];
+    }
+  };
+
+  // 3️⃣ Get satu sertifikat berdasarkan Event + Participant
+  // public shared query (msg) func getCertificateByEventAndParticipant(eventId: Nat) : async ?Certificate {
+  //   certMap.get((eventId, msg.caller));
+  // };
 };

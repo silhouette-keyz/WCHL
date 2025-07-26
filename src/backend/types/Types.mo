@@ -39,14 +39,27 @@ module {
     public type Users = HashMap.HashMap<Principal, User>;
 
 
-    public type Event = {
+    public type EventData = {
       id: Nat;
       eventName: Text;
       eventType: Text;
       eventDate: Text;
+    }; 
+
+    public type EventDatas = HashMap.HashMap<Nat, EventData>;
+
+    public type ParticipantData = {
+      eventId : Nat;
+      participantId : Principal;
+      name : Text;
+      username : Text;
+      telp : Text;
+      RegisterDate : Text;
     };
 
-    public type Events = HashMap.HashMap<Nat, Event>;
-  
-  
+    public type Attendance = {
+      eventId : Nat;
+      participant : Principal;
+      checkInTime : Text;
+    };
 };
