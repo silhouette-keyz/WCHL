@@ -31,7 +31,7 @@ function EventProvider({ children }) {
     console.log('eventId', eventId)
     const res = await backend.joinEvent(Number(eventId));
     console.log('registerEvent', res)
-    fetchParticipants(eventId)
+    await fetchParticipants(eventId)
   };
 
   const fetchParticipants = async (eventId) => {

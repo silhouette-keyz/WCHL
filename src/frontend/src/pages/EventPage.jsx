@@ -66,14 +66,15 @@ export default function EventPage() {
     setOpenEventDetail(true)
     setEventChoose(data)
     await fetchParticipants(data.id)
+    await getCertificateEvent(data.id)
   }
 
   const handleScanQR = (data) => {
     setResultQR(data)
   }
 
-  const checkInEvent = (eventId, userId)=>{
-    createNFTCertificate(eventId, userId)
+  const checkInEvent = async(eventId, userId)=>{
+    await createNFTCertificate(eventId, userId)
   }
   
   return (
@@ -211,6 +212,7 @@ export default function EventPage() {
               <TableBody>
                 {
                   participantList.map((item,index)=>{
+                    const filter = certificateList.filter(x=>x.eventId === eventChoose.id && x.participantId === item.participantId)
                     return(
                       <TableRow>
                         <TableCell>{index+1}</TableCell>
@@ -219,10 +221,13 @@ export default function EventPage() {
                         <TableCell>{item.telp}</TableCell>
                         <TableCell>{ numbertoStringDate(item.RegisterDate)}</TableCell>
                         <TableCell>
-                          
+                          {filter.length>0 ? "Ready Certificate" : "-" }
                         </TableCell>
                         <TableCell>
+                          {
+                          filter.length == 0 &&
                           <Button variant='contained' color='primary' onClick={()=> checkInEvent(eventChoose.id, item.userId)}>Check-in</Button>
+                          }
                         </TableCell>
                       </TableRow>
                     )
